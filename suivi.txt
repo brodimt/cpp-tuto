@@ -1,6 +1,6 @@
 Fichier de suivi de la mise en place du tuto : 
 
-Semaine 03/03/ 
+Step 1 
 Exo 1 : ecrire un programme qui calcul factorielle(n) à la compilation 
 --> introduction de la notion de métaprogrammation en C++ 
 qlqs liens : 
@@ -8,6 +8,13 @@ http://fr.wikipedia.org/wiki/M%C3%A9taprogrammation_avec_des_patrons
 http://stackoverflow.com/questions/3468246/whats-the-use-of-metaprogramming
 
 
-Semaine 10/03/ 
+Step 2
 Exo2 : combinaison de métaprogrammation et programmation dynamique 
 Objectif : en partant du code écrit à l'exo 1, ne calculer factorielle(n) à la compilation que pour n<N 
+
+
+
+Step 3 
+ http://gcc.godbolt.org/ ça permet de voir rapidement le code généré en fonction des options de compil.
+
+Si le compilateur n'optimise pas, tu peux le faire à sa place, par exemple en faisant des pas logarithmiques (n/2 au lieu de n-1, c'est moins drole à coder mais génère moins d'opérations).?
