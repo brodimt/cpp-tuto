@@ -1,0 +1,76 @@
+Plan du/des documents à publier sur le tuto C++
+
+Mise en route rapide
+  Quelques ide online ou à installer, libs incontournables (stl, boost)
+  1er programme : calculatrice
+
+[opt] Intro : de l'IDE au silicium
+  Fonctionnement simplifié d'un ordinater
+    Hardware
+      CPU = instructions séquentielles simples
+      Mémoires hiérarchiques
+      Gestion des entrées/sorties
+      Multi/many cores
+    OS
+      processus et ressources virtualisées
+      drivers, libs & services
+      comment le PC boot ?
+      méchanismes d'IPC
+    [opt] Historique et tendances
+  
+  Du code source au code machine
+    Interpréteurs
+    Compilateurs
+      Etapes de compilation
+        parse (lex + gram + sema)
+        codegen (lower + optim)
+        architecture front-end + back-end -- ex: LLVM IR
+      Etapes de déploiement : bootstrap, etc.
+    Hybrides : JIT
+    
+Présentation générale du langage C++
+  Philosophie = tout est possible... pour le meilleur et pour le pire
+  Histoire
+    Vieux langage industriel, basé sur C
+    Continue d'innover malgré le poids de la rétro-compatibilité
+      Parfois un peu par hasard -> templates
+    cf D
+  Langage multi-paradigmes
+    Programmation système
+    Impératif / procédural
+    Orienté objet
+    Fonctionnel
+    Programmation générique
+  Programmes statiques
+    Langage compilé
+    Statiquement typé
+    Peu de réflexivité
+
+Syntaxe et paradigme impératif
+  todo
+
+Gestion mémoire
+  pile/tas
+  objects, pointeurs, références, r-values
+  stratégies: smart pointers, memory pool, garbage collectors
+
+Paradigme fonctionnel
+  présentation
+  exmples
+
+Programmation générique, méta-langage et opérations à la compilation
+  fonctions et classes génériques, libs génériques, réutilisation
+  un 2ème langage!
+    fonctionnel + pattern matching
+    sfinae
+  les const-expression
+  le pré-processeur
+    hacks & boost.preprocessor
+  applications
+    réutilisation / factorisation de code
+    dispatch plus flexible et rapide
+    
+Illustration : réalisation d'un tableau générique multi-dimensionnel
+  todo
+
+Illustration : tableaux multi-dimmensionnels
