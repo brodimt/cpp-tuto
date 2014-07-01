@@ -2,12 +2,19 @@
 using std::cout; using std::cerr; using std::endl;
 #include <tuple>
 
+/*	conventions
+		...TBD...
+*/
+
 using uint = unsigned int;
 
-template<class A, class B> using COMMON = typename std::common_type<A, B>::type;
-
-
 template<class T> struct TYPE { using type = T; };
+
+template<class A, class B> using COMMON2 = typename std::common_type<A, B>::type;
+template<class... Ts> struct common_;
+template<class T> struct common_<T> : TYPE<T> {};
+template<class F, class... Ns> struct common_<F, Ns...> : TYPE<COMMON2<F, typename common_<Ns...>::type> {};
+template<class... Ts> using COMMON = typename common_<Ts...>::type;
 
 
 enum ValueKind { sta, dyn, ref };
