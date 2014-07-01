@@ -2,15 +2,26 @@
 struct NotScalarCast : std::exception {
 	const char* what() const { return "trying to cast a non scalar to a single value"; }
 };
+struct IncompatibleOperation : std::exception {
+	const char* what() const { return "trying to call an operation which isn't defined for this type"; }
+};
 
 using uint = unsigned int;
 
 template<class E> struct IArithmetic {
+	enum Op1 {
+		op_not, op_neg
+	};
+	enum Op2 {
+		op_add, op_mul, op_sub, op_div, op_mod,
+		op_and, op_or, op_xor
+	};
+	
 	virtual const IArithmetic & op1(Op1 op, const E & x) = 0;
 	virtual const IArithmetic & op2(Op2 op, const E & right) = 0;
+	
+	const IArithmetic & operator+ 
 };
-struct ISelfArithmetic : IArithmetic<ISelfArithmetic> {};
-
 
 struct IDepth {
 	virtual uint depth() const = 0;
@@ -50,7 +61,7 @@ struct IIndex : IDepth, IScalar {
 	virtual const IRange & operator[](uint i) const = 0;
 };
 
-template<class E> struct IArray_Read : IDepth, IScalar, IArithmetic {
+template<class E> struct IArray_Read : IDepth, IScalar, IArithmetic<E>, IArithmetic<IArray_Read<E>> {
 	virtual const IArray_Read<uint> & size() const = 0;
 	virtual bool empty() const = 0;
 	
