@@ -9,18 +9,22 @@ struct IncompatibleOperation : std::exception {
 using uint = unsigned int;
 
 template<class E> struct IArithmetic {
-	enum Op1 {
-		op_not, op_neg
-	};
-	enum Op2 {
-		op_add, op_mul, op_sub, op_div, op_mod,
-		op_and, op_or, op_xor
-	};
-	
-	virtual const IArithmetic & op1(Op1 op, const E & x) = 0;
+	enum Op1 { op_not, op_neg };
+	enum Op2 { op_add, op_mul, op_sub, op_div, op_mod, op_and, op_or, op_xor };
+	virtual const IArithmetic & op1(Op1 op) = 0;
 	virtual const IArithmetic & op2(Op2 op, const E & right) = 0;
 	
-	const IArithmetic & operator+ 
+	const IArithmetic & operator~() const { return op1(op_not); }
+	const IArithmetic & operator-() const { return op1(op_neg); }
+	
+	const IArithmetic & operator+(const E & right) const { return op2(op_add, right); }
+	const IArithmetic & operator-(const E & right) const { return op2(op_sub, right); }
+	const IArithmetic & operator*(const E & right) const { return op2(op_mul, right); }
+	const IArithmetic & operator/(const E & right) const { return op2(op_div, right); }
+	const IArithmetic & operator%(const E & right) const { return op2(op_mod, right); }
+	const IArithmetic & operator&(const E & right) const { return op2(op_and, right); }
+	const IArithmetic & operator|(const E & right) const { return op2(op_or, right); }
+	const IArithmetic & operator^(const E & right) const { return op2(op_xor, right); }
 };
 
 struct IDepth {
@@ -55,10 +59,10 @@ template<class E> struct IRange : ICount, IScalar {
 };
 
 struct IIndex : IDepth, IScalar {
-	vector<shared_ptr<IScalar>> data;
+	vector<shared_ptr<IRange<uint>>> data;
 	bool isScalar() const override final { return data.size() == 1 && data[0]->isScalar(); }
 	uint depth() const override final { return data.size(); }
-	virtual const IRange & operator[](uint i) const = 0;
+	virtual const IRange<uint> & operator[](uint i) const = 0;
 };
 
 template<class E> struct IArray_Read : IDepth, IScalar, IArithmetic<E>, IArithmetic<IArray_Read<E>> {
@@ -71,11 +75,17 @@ template<class E> struct IArray_Read : IDepth, IScalar, IArithmetic<E>, IArithme
 	virtual const IArray_Read & operator[](const IIndex &) const = 0;
 };
 
-template<class E> struct IArray_WriteStruct {
+template<class E> struct IArray_WriteData : IArray_Read {
+	virtual operator T & () = 0;
+	virtual IArray_WriteData & operator[](const IIndex &) = 0;
+};
+
+template<class E> struct IArray_Write : IArray_WriteData {
 	virtual void size(const IArray_Read<int> &) = 0;
 };
 
-template<class E> struct IArray_WriteData {
-	virtual operator T & () = 0;
-	virtual IArray_WriteData & operator[](const IIndex &) = 0;
+
+
+template<class E> struct ScalarRange : IRange<E> {
+	
 };
