@@ -1,9 +1,16 @@
+#include <exception>
+struct NotScalarCast : std::exception {
+	const char* what() const { return "trying to cast a non scalar to a single value"; }
+};
+
 using uint = unsigned int;
 
-struct IArithmetic {
-	virtual const IArithmetic & operator+(const IArithmetic & left, const IArithmetic & right) = 0;
-	virtual const IArithmetic & operator*(const IArithmetic & left, const IArithmetic & right) = 0;
+template<class E> struct IArithmetic {
+	virtual const IArithmetic & op1(Op1 op, const E & x) = 0;
+	virtual const IArithmetic & op2(Op2 op, const E & right) = 0;
 };
+struct ISelfArithmetic : IArithmetic<ISelfArithmetic> {};
+
 
 struct IDepth {
 	virtual uint depth() const = 0;
@@ -11,6 +18,7 @@ struct IDepth {
 struct ICount {
 	virtual uint count() const = 0;
 };
+
 template<class E> struct IScalar_Read {
 	virtual bool isScalar() const = 0;
 	operator const E & () const {
@@ -42,7 +50,7 @@ struct IIndex : IDepth, IScalar {
 	virtual const IRange & operator[](uint i) const = 0;
 };
 
-template<class E> struct IArray_Read : IDepth, IScalar {
+template<class E> struct IArray_Read : IDepth, IScalar, IArithmetic {
 	virtual const IArray_Read<uint> & size() const = 0;
 	virtual bool empty() const = 0;
 	
