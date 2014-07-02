@@ -37,7 +37,6 @@ int factorielle(unsigned int N){
 }
  
 //Meilleure solution  utilisant une seule fonction facto
-
 template<unsigned int n> struct fact {
   typedef fact<n-1> parent;
   static const int value = n * parent::value;
