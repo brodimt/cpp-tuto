@@ -1,0 +1,26 @@
+
+
+Next step : les types. En gros là on a fait des fonctions sur des valeurs, maintenant on va faire des fonctions sur des types. Quelques exercices:
+- same_type<type_a, type_b>::value : true is type_a et type_b est le même type, false sinon
+- is_const<type> : fait ce que ça dit
+- is_pointer<type>
+- make_const<T>::type est T à qui on ajoute const si il n'y était pas, par exemple
+  same_type< const int, make_const<int>::type >::value
+
+Next step : SFINAE, lit sur internet et fait une macro HAS_TYPE(CLASS, TYPE) qui s'évallue à true si la classe nommée CLASS a une définition de type appelé TYPE, par exemple
+struct S { typedef int t; };
+HAS_TYPE(S, t) == true
+HAS_TYPE(S, toto) == false
+
+
+
+Next next step : les tableaux. Tu peux faire une V1 des tableaux sans chercher à optimiser et à utiliser des templates ou autres, juste le code le plus simple possible. Cahier des charges:
+- Contient des floats ou des doubles
+- Nombre de dimensions arbitraire, disons de 1 à 3 pour l'instant. Reste constant pendant la durée de vie d'un objet
+- Taille (nombre d'éléments) variable
+- Accès aux éléments par operator(i,j,...)
+- Remplissage d'un scalaire, par exemple tableau = 0;
+- Addition de tableaux : tab1 + tab2;
+- Accès à une vue par operator[], genre tab1D = tab2D[i] quand je dis vue, c'est qu'il ne doit pas y avoir de copie de données, juste un changement d'entête en gardant les mêmes données
+- Pour éviter les copies de données, tu peux regarder par exemple std::shared_ptr (C++11, avant il faut boost::shared_ptr)
+

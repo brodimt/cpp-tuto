@@ -1,0 +1,39 @@
+Fichier de suivi de la mise en place du tuto C ++: 
+------------------------------------------------------------------------------------------------------------------
+Etape 1 
+------------------------------------------------------------------------------------------------------------------
+
+Step 1 :  Ecrire un programme qui calcul factorielle(n) à la compilation 
+--> introduction de la notion de métaprogrammation en C++ 
+qlqs liens : 
+http://fr.wikipedia.org/wiki/M%C3%A9taprogrammation_avec_des_patrons
+http://stackoverflow.com/questions/3468246/whats-the-use-of-metaprogramming
+
+
+Step 2 : combinaison de métaprogrammation et programmation dynamique 
+Objectif : en partant du code écrit à la step 1, ne calculer factorielle(n) à la compilation que pour n<N 
+
+Step 3 
+http://gcc.godbolt.org/ 
+ça permet de voir rapidement le code généré en fonction des options de compil.
+
+Si le compilateur n'optimise pas, tu peux le faire à sa place, par exemple en faisant des pas logarithmiques (n/2 au lieu de n-1, c'est moins drole à coder mais génère moins d'opérations).?
+
+--------------------------------------------------
+Etape 2 
+--------------------------------------------------
+
+Objectifs : 
+Next step : les types. En gros là on a fait des fonctions sur des valeurs, maintenant on va faire des fonctions sur des types. Quelques exercices:
+- same_type<type_a, type_b>::value : true is type_a et type_b est le même type, false sinon
+- is_const<type> : fait ce que ça dit
+- is_pointer<type>
+- make_const<T>::type est T à qui on ajoute const si il n'y était pas, par exemple
+  same_type< const int, make_const<int>::type >::value
+
+--> Remarque de séthy : ces fonctionnalités ont été introduites dans la norme c++11
+liens : 
+http://en.wikipedia.org/wiki/Typeid
+http://en.cppreference.com/w/cpp/header/type_traits
+--------------------------------------------------
+	
